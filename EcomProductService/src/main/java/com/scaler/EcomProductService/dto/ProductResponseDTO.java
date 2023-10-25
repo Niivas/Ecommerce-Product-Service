@@ -1,5 +1,6 @@
 package com.scaler.EcomProductService.dto;
 
+import com.scaler.EcomProductService.model.Product;
 import lombok.Getter;
 import lombok.Setter;
 
