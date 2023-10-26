@@ -3,6 +3,7 @@ package com.scaler.EcomProductService.controller;
 import com.scaler.EcomProductService.dto.ProductListResponseDTO;
 import com.scaler.EcomProductService.dto.ProductRequestDTO;
 import com.scaler.EcomProductService.dto.ProductResponseDTO;
+import com.scaler.EcomProductService.model.Product;
 import com.scaler.EcomProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,7 +28,7 @@ public class ProductController {
      */
 
     @GetMapping("/products")
-    public ResponseEntity getAllProducts(){
+    private ResponseEntity getAllProducts(){
         /*
         ProductResponseDTO p1 =  new ProductResponseDTO();
         p1.setId(1);
@@ -55,7 +56,7 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public ResponseEntity getProductFromId(@PathVariable("id") int id){
         /*
-        ProductResponseDTO p1 =  new ProductResponseDTO();
+        ProductResponseDTO p1 = new ProductResponseDTO();
         p1.setId(1);
         p1.setTitle("Iphone 15 pro");
         p1.setPrice(150000);
@@ -63,7 +64,7 @@ public class ProductController {
         p1.setDescription("Kafi Mehnga phone");
         p1.setCategory("Electronics");
 
-        ProductResponseDTO p2 =  new ProductResponseDTO();
+        ProductResponseDTO p2 = new ProductResponseDTO();
         p2.setId(2);
         p2.setTitle("Macbook Pro");
         p2.setPrice(250000);
@@ -87,6 +88,12 @@ public class ProductController {
     @DeleteMapping("/products/{id}")
     public ResponseEntity deleteProductById(@PathVariable("id") int id){
         boolean response = productService.deleteProduct(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/products/{id}")
+    public ResponseEntity updateProductById(@PathVariable("id") int id, @RequestBody ProductRequestDTO productRequestDTO){
+        ProductResponseDTO response = productService.updateProduct(id, productRequestDTO);
         return ResponseEntity.ok(response);
     }
 }

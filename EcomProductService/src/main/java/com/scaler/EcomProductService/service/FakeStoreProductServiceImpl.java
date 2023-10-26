@@ -3,15 +3,12 @@ package com.scaler.EcomProductService.service;
 import com.scaler.EcomProductService.dto.ProductListResponseDTO;
 import com.scaler.EcomProductService.dto.ProductRequestDTO;
 import com.scaler.EcomProductService.dto.ProductResponseDTO;
-import com.scaler.EcomProductService.model.Product;
-import org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
+import java.util.Objects;
 
 @Service("fakeStoreProductService")
 public class FakeStoreProductServiceImpl implements ProductService{
@@ -28,7 +25,7 @@ public class FakeStoreProductServiceImpl implements ProductService{
         ResponseEntity<ProductResponseDTO[]> productResponseArray =
                 restTemplate.getForEntity(getAllProductsURL, ProductResponseDTO[].class);
         ProductListResponseDTO responseDTO = new ProductListResponseDTO();
-        for(ProductResponseDTO productResponse : productResponseArray.getBody()){
+        for(ProductResponseDTO productResponse : Objects.requireNonNull(productResponseArray.getBody())){
             responseDTO.getProducts().add(productResponse);
         }
         return responseDTO;
@@ -61,7 +58,10 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product updateProduct(int id, Product updatedProduct) {
-        return null;
+    public ProductResponseDTO updateProduct(int id, ProductRequestDTO requestDTO) {
+        String url = "https://fakestoreapi.com/products/" + id;
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<ProductResponseDTO> productResponse = restTemplate.postForEntity(url, requestDTO, ProductResponseDTO.class);
+        return productResponse.getBody();
     }
 }
