@@ -3,6 +3,7 @@ package com.scaler.EcomProductService.controller;
 import com.scaler.EcomProductService.dto.ProductListResponseDTO;
 import com.scaler.EcomProductService.dto.ProductRequestDTO;
 import com.scaler.EcomProductService.dto.ProductResponseDTO;
+import com.scaler.EcomProductService.exception.ProductNotFoundException;
 import com.scaler.EcomProductService.model.Product;
 import com.scaler.EcomProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,59 +23,20 @@ public class ProductController {
 
     /**
      Field Injection
-     //    @Autowired
-     //    @Qualifier("fakeStoreProductService")
-     //    private ProductService productService;
+     // @Autowired
+     // @Qualifier("fakeStoreProductService")
+     // private ProductService;
      */
 
     @GetMapping("/products")
     private ResponseEntity getAllProducts(){
-        /*
-        ProductResponseDTO p1 =  new ProductResponseDTO();
-        p1.setId(1);
-        p1.setTitle("Iphone 15 pro");
-        p1.setPrice(150000);
-        p1.setImage("www.google.com/images/iphone");
-        p1.setDescription("Kafi Mehnga phone");
-        p1.setCategory("Electronics");
-
-        ProductResponseDTO p2 =  new ProductResponseDTO();
-        p2.setId(2);
-        p2.setTitle("Macbook Pro");
-        p2.setPrice(250000);
-        p2.setImage("www.google.com/images/macbook");
-        p2.setDescription("Kafi Mehnga laptop");
-        p2.setCategory("Electronics");
-
-        List<ProductResponseDTO> products = Arrays.asList(p1, p2);
-        return ResponseEntity.ok(products);
-        */
         ProductListResponseDTO response = productService.getAllProducts();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity getProductFromId(@PathVariable("id") int id){
-        /*
-        ProductResponseDTO p1 = new ProductResponseDTO();
-        p1.setId(1);
-        p1.setTitle("Iphone 15 pro");
-        p1.setPrice(150000);
-        p1.setImage("www.google.com/images/iphone");
-        p1.setDescription("Kafi Mehnga phone");
-        p1.setCategory("Electronics");
+    public ResponseEntity getProductFromId(@PathVariable("id") int id) throws ProductNotFoundException {
 
-        ProductResponseDTO p2 = new ProductResponseDTO();
-        p2.setId(2);
-        p2.setTitle("Macbook Pro");
-        p2.setPrice(250000);
-        p2.setImage("www.google.com/images/macbook");
-        p2.setDescription("Kafi Mehnga laptop");
-        p2.setCategory("Electronics");
-
-        List<ProductResponseDTO> products = Arrays.asList(p1, p2);
-        return ResponseEntity.ok(products);
-        */
         ProductResponseDTO response = productService.getProductById(id);
         return ResponseEntity.ok(response);
     }
@@ -91,7 +53,7 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/products/{id}")
+    @PutMapping ("/products/{id}")
     public ResponseEntity updateProductById(@PathVariable("id") int id, @RequestBody ProductRequestDTO productRequestDTO){
         ProductResponseDTO response = productService.updateProduct(id, productRequestDTO);
         return ResponseEntity.ok(response);
