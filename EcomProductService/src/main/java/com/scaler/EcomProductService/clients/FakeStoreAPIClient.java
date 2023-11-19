@@ -1,11 +1,10 @@
 package com.scaler.EcomProductService.clients;
 
-import com.scaler.EcomProductService.dto.*;
+import com.scaler.EcomProductService.dto.FakeStoreProductRequestDTO;
+import com.scaler.EcomProductService.dto.FakeStoreProductResponseDTO;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.Objects;
 
 @Component
 public class FakeStoreAPIClient {
-    private RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder;
 
     public FakeStoreAPIClient(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplateBuilder = restTemplateBuilder;
